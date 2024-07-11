@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchBox.css';
 
 const SearchBox = ({ onSearch, reviews }) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    console.log('SearchBox received reviews:', reviews); // Debugging log
+  }, [reviews]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -12,10 +16,16 @@ const SearchBox = ({ onSearch, reviews }) => {
 
     if (value.length > 0) {
       const allTopics = (reviews || []).flat().map(review => review.topic);
+      console.log('All Topics:', allTopics); // Debugging log
+
       const uniqueTopics = [...new Set(allTopics)];
+      console.log('Unique Topics:', uniqueTopics); // Debugging log
+
       const filteredSuggestions = uniqueTopics.filter(topic =>
         topic.toLowerCase().includes(value.toLowerCase())
       );
+      console.log('Filtered Suggestions:', filteredSuggestions); // Debugging log
+
       setSuggestions(filteredSuggestions);
     } else {
       setSuggestions([]);
@@ -23,6 +33,7 @@ const SearchBox = ({ onSearch, reviews }) => {
   };
 
   const handleSuggestionClick = (suggestion) => {
+    console.log('Suggestion Clicked:', suggestion); // Debugging log
     setQuery(suggestion);
     onSearch(suggestion);
     setSuggestions([]);

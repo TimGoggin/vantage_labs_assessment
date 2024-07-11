@@ -30,10 +30,12 @@ const App = () => {
   }, [filteredReviews, page]);
 
   const handleSearch = (query) => {
+    console.log('Search Query:', query); // Debugging log
     if (query === '') {
       setFilteredReviews(reviews);
     } else {
       const result = reviews.filter(chunk => chunk.some(review => review.topic.toLowerCase().includes(query.toLowerCase())));
+      console.log('Filtered Results:', result); // Debugging log
       setFilteredReviews(result);
     }
     setPage(1); // Reset page to 1 when a new search is made
