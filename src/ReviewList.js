@@ -21,9 +21,9 @@ const ReviewList = ({ reviews, lastReviewElementRef }) => {
               <a href={review.url} target="_blank" rel="noopener noreferrer" className="review-title">
                 {review.title}
               </a>
-              <p className="review-date">{formatDate(review.date)}</p>
               <p className="review-author">{review.author}</p>
-              <p className="review-topic">{review.topic}</p>
+              <p className="review-date">{formatDate(review.date)}</p>
+              
             </div>
           );
         } else {
@@ -32,9 +32,9 @@ const ReviewList = ({ reviews, lastReviewElementRef }) => {
               <a href={review.url} target="_blank" rel="noopener noreferrer" className="review-title">
                 {review.title}
               </a>
-              <p className="review-date">{formatDate(review.date)}</p>
               <p className="review-author">{review.author}</p>
-              <p className="review-topic">{review.topic}</p>
+              <p className="review-date">{formatDate(review.date)}</p>
+              
             </div>
           );
         }
