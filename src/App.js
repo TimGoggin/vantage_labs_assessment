@@ -30,10 +30,15 @@ const App = () => {
   }, [filteredReviews, page]);
 
   const handleSearch = (query) => {
-    const result = reviews.filter(chunk => chunk.some(review => review.topic.toLowerCase().includes(query.toLowerCase())));
-    setFilteredReviews(result);
+    if (query === '') {
+      setFilteredReviews(reviews);
+    } else {
+      const result = reviews.filter(chunk => chunk.some(review => review.topic.toLowerCase().includes(query.toLowerCase())));
+      setFilteredReviews(result);
+    }
     setPage(1); // Reset page to 1 when a new search is made
   };
+
 
   const observer = useRef();
   const lastReviewElementRef = useCallback(node => {
@@ -48,7 +53,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <SearchBox onSearch={handleSearch} />
+      <SearchBox onSearch={handleSearch} reviews = {reviews} />
       <ReviewList reviews={visibleReviews} lastReviewElementRef={lastReviewElementRef} />
     </div>
   );
