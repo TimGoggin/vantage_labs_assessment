@@ -1,35 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import ReviewList from './ReviewList'
+import ReviewList from './ReviewList';
 import SearchBox from './SearchBox';
-import reviewsData from './cochrane_reviews.json'; // Adjust path if necessary
+import './App.css';
+import reviewsData from './cochrane_reviews.json';
 
 const App = () => {
   const [reviews, setReviews] = useState([]);
   const [filteredReviews, setFilteredReviews] = useState([]);
-  const [topics, setTopics] = useState([]);
 
   useEffect(() => {
     setReviews(reviewsData);
-    setFilteredReviews(reviewsData);
-    const allTopics = [...new Set(reviewsData.map((review) => review.Topic))];
-    setTopics(allTopics);
+    setFilteredReviews(reviewsData.slice(0, 10)); // Initial 10 reviews
   }, []);
 
   const handleSearch = (query) => {
-    if (query === '') {
-      setFilteredReviews(reviews);
-    } else {
-      const filtered = reviews.filter((review) =>
-        review.Topic.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredReviews(filtered);
-    }
+    const result = reviews.filter(review => review.topic.toLowerCase().includes(query.toLowerCase()));
+    setFilteredReviews(result.slice(0, 10));
   };
 
   return (
-    <div className="app">
-      <h1>Cochrane Reviews</h1>
-      <SearchBox topics={topics} onSearch={handleSearch} />
+    <div className="App">
+      <SearchBox onSearch={handleSearch} />
       <ReviewList reviews={filteredReviews} />
     </div>
   );

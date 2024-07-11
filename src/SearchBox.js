@@ -1,33 +1,22 @@
 import React, { useState } from 'react';
+import './SearchBox.css';
 
-const SearchBox = ({ topics, onSearch }) => {
+const SearchBox = ({ onSearch }) => {
   const [query, setQuery] = useState('');
 
-  const handleInputChange = (event) => {
-    const inputValue = event.target.value;
-    setQuery(inputValue);
-    onSearch(inputValue);
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+    onSearch(e.target.value);
   };
 
   return (
     <div className="search-box">
       <input
         type="text"
-        placeholder="Search by Cochrane Topic..."
         value={query}
-        onChange={handleInputChange}
+        onChange={handleChange}
+        placeholder="Search by topic..."
       />
-      {query.length > 0 && (
-        <div className="suggestions">
-          {topics
-            .filter((topic) => topic.toLowerCase().includes(query.toLowerCase()))
-            .map((topic, index) => (
-              <div key={index} className="suggestion-item" onClick={() => setQuery(topic)}>
-                {topic}
-              </div>
-            ))}
-        </div>
-      )}
     </div>
   );
 };
