@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './SearchBox.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
+
 
 const SearchBox = ({ onSearch, reviews }) => {
   const [query, setQuery] = useState('');
@@ -39,14 +42,20 @@ const SearchBox = ({ onSearch, reviews }) => {
     setSuggestions([]);
   };
 
+
+
   return (
-    <div className="search-box">
-      <input
-        type="text"
-        value={query}
-        onChange={handleChange}
-        placeholder="Search by topic..."
-      />
+    <div className="search-box-container">
+      <div className="search-box">
+        <input
+          type="text"
+          value={query}
+          onChange={handleChange}
+          placeholder="Search by topic..."
+          className="search-input"
+        />
+        <span className="search-icon"><i className="fas fa-search"></i></span>
+      </div>
       {suggestions.length > 0 && (
         <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
