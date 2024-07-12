@@ -2,3 +2,7 @@
   font-family: Arial, sans-serif;
   padding: 20px;
 }
+
+.search-box-container {
+  margin-bottom: 200px; /* Add margin to create gap between search bar and review list */
+}

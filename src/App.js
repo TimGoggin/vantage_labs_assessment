@@ -55,7 +55,9 @@ const App = () => {
 
   return (
     <div className="App">
+      <div className='search-box-container'>
       <SearchBox onSearch={handleSearch} reviews = {reviews} />
+      </div>
       <ReviewList reviews={visibleReviews} lastReviewElementRef={lastReviewElementRef} />
     </div>
   );
