@@ -7,7 +7,6 @@ const SearchBox = ({ onSearch, onAddSearchTerm, onRemoveSearchTerm, activeSearch
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    console.log('SearchBox received reviews count:', reviewsCount);
   }, [reviewsCount]);
 
   const handleChange = (e) => {
