@@ -8,11 +8,23 @@
   .review-item {
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
+    position:relative;
+    padding-left: 10px;
+  }
+
+  .review-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px; /* Adjust the width of the line */
+    background-color: #050792; /* Adjust the color of the line */
   }
   
   .review-title {
     font-size: 1.2em;
-    color: #020357;
+    color: #050792;
     text-decoration: none;
   }
   
