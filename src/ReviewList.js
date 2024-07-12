@@ -2,16 +2,6 @@ import React from 'react';
 import './ReviewList.css';
 
 const ReviewList = ({ reviews, lastReviewElementRef }) => {
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Invalid Date';
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-      return 'Invalid Date';
-    }
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString(undefined, options);
-  };
-
   return (
     <div className="review-list">
       {reviews.map((review, index) => {
@@ -22,7 +12,7 @@ const ReviewList = ({ reviews, lastReviewElementRef }) => {
                 {review.title}
               </a>
               <p className="review-author">{review.author}</p>
-              <p className="review-date">{formatDate(review.date)}</p>
+              <p className="review-date">{review.date}</p>
               
             </div>
           );
@@ -33,7 +23,7 @@ const ReviewList = ({ reviews, lastReviewElementRef }) => {
                 {review.title}
               </a>
               <p className="review-author">{review.author}</p>
-              <p className="review-date">{formatDate(review.date)}</p>
+              <p className="review-date">{review.date}</p>
               
             </div>
           );
