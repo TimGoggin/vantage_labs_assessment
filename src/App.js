@@ -10,6 +10,7 @@ const App = () => {
   const [visibleReviews, setVisibleReviews] = useState([]);
   const [page, setPage] = useState(1);
   const reviewsPerPage = 10;
+  const [activeSearchTerms, setActiveSearchTerms] = useState([]);
 
   useEffect(() => {
     setReviews(reviewsData);
@@ -28,6 +29,25 @@ const App = () => {
     }
     setVisibleReviews(newVisibleReviews);
   }, [filteredReviews, page]);
+
+  const handleAddSearchTerm = (term) => {
+    setActiveSearchTerms(prevTerms => [...prevTerms, term]);
+  };
+
+  const handleRemoveSearchTerm = (term) => {
+    setActiveSearchTerms(prevTerms => prevTerms.filter(t => t !== term));
+  };
+
+  useEffect(() => {
+    if (activeSearchTerms.length === 0) {
+      setFilteredReviews(reviews);
+    } else {
+      const result = reviews.filter(chunk =>
+        activeSearchTerms.every(term => chunk.some(review => review.topic.toLowerCase().includes(term.toLowerCase())))
+      );
+      setFilteredReviews(result);
+    }
+  }, [activeSearchTerms, reviews]);
 
   const handleSearch = (query) => {
     console.log('Search Query:', query); // Debugging log
@@ -56,7 +76,14 @@ const App = () => {
   return (
     <div className="App">
       <div className='search-box-container'>
-      <SearchBox onSearch={handleSearch} reviews = {reviews} />
+      <SearchBox
+          onSearch={handleSearch}
+          onAddSearchTerm={handleAddSearchTerm}
+          onRemoveSearchTerm={handleRemoveSearchTerm}
+          activeSearchTerms={activeSearchTerms}
+          reviews={reviews}
+          reviewsCount={filteredReviews.flat().length}
+        />
       </div>
       <ReviewList reviews={visibleReviews} lastReviewElementRef={lastReviewElementRef} />
     </div>

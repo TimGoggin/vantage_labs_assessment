@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './SearchBox.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-
-
-const SearchBox = ({ onSearch, reviews }) => {
+const SearchBox = ({ onSearch, onAddSearchTerm, onRemoveSearchTerm, activeSearchTerms, reviews, reviewsCount }) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    console.log('SearchBox received reviews:', reviews); // Debugging log
-  }, [reviews]);
+    console.log('SearchBox received reviews count:', reviewsCount);
+  }, [reviewsCount]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -19,16 +17,10 @@ const SearchBox = ({ onSearch, reviews }) => {
 
     if (value.length > 0) {
       const allTopics = (reviews || []).flat().map(review => review.topic);
-      console.log('All Topics:', allTopics); // Debugging log
-
       const uniqueTopics = [...new Set(allTopics)];
-      console.log('Unique Topics:', uniqueTopics); // Debugging log
-
       const filteredSuggestions = uniqueTopics.filter(topic =>
         topic.toLowerCase().includes(value.toLowerCase())
       );
-      console.log('Filtered Suggestions:', filteredSuggestions); // Debugging log
-
       setSuggestions(filteredSuggestions);
     } else {
       setSuggestions([]);
@@ -36,13 +28,14 @@ const SearchBox = ({ onSearch, reviews }) => {
   };
 
   const handleSuggestionClick = (suggestion) => {
-    console.log('Suggestion Clicked:', suggestion); // Debugging log
-    setQuery(suggestion);
-    onSearch(suggestion);
+    setQuery('');
+    onAddSearchTerm(suggestion);
     setSuggestions([]);
   };
 
-
+  const handleRemoveClick = (term) => {
+    onRemoveSearchTerm(term);
+  };
 
   return (
     <div className="search-box-container">
@@ -56,6 +49,11 @@ const SearchBox = ({ onSearch, reviews }) => {
         />
         <span className="search-icon"><i className="fas fa-search"></i></span>
       </div>
+      {query && (
+        <div className="results-count">
+          <text><b>{reviewsCount}</b> Cochrane Reviews matching <b>{query}</b> in <b>Cochrane Topic</b></text>
+        </div>
+      )}
       {suggestions.length > 0 && (
         <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
@@ -68,6 +66,19 @@ const SearchBox = ({ onSearch, reviews }) => {
             </li>
           ))}
         </ul>
+      )}
+      {activeSearchTerms.length > 0 && (
+        <div className="active-search-terms">
+          {activeSearchTerms.map((term, index) => (
+            <span
+              key={index}
+              className="search-term"
+              onClick={() => handleRemoveClick(term)}
+            >
+              {term} <i className="fas fa-times"></i>
+            </span>
+          ))}
+        </div>
       )}
     </div>
   );

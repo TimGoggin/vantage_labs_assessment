@@ -52,3 +52,26 @@
 .suggestion-item:hover {
   background-color: #f0f0f0;
 }
+
+.results-count {
+  padding-top: 5px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.active-search-terms {
+  margin-top: 10px;
+}
+
+.search-term {
+  display: inline-block;
+  background-color: #ba13db;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.search-term i {
+  margin-left: 5px;
+}
